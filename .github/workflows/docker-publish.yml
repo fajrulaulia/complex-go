@@ -1,12 +1,9 @@
 name: Docker
 
-on:
-  push:
-  pull_request:
+on: push
 
 env:
-  # TODO: Change variable to your image's name.
-  IMAGE_NAME: image
+  IMAGE_NAME: app_image_modulor
 
 jobs:
   test:
@@ -15,4 +12,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run tests
         run: make cloud-test
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run build
+        run: make image-build
 
