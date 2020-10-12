@@ -1,7 +1,7 @@
-# ModulorGO
+# ModulorGo
 
 ## Overview
- ModulorGO is a Backend module written by golang, easy to Write Code, Testing and Build.
+ ModulorGo is a Backend module written by golang, easy to Write Code, Testing and Build.
 
 ## Requirement
 - OS Linux or Mac.
