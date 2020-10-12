@@ -1,0 +1,30 @@
+image: docker:latest
+services:
+  - docker:dind
+
+before_script:
+  - apk add bash
+  - apk update && apk add make
+  - apk update && apk add docker-compose
+  - docker info
+
+variables:
+  REPO_NAME: https://gitlab.com/fajrulaulia/modulor-go
+  DOCKER_DRIVER: overlay
+
+stages:
+  - test
+  - build
+
+test:
+  stage: test
+  script:
+    - CI=true make cloud-test
+
+build:
+  stage: build
+  script:
+    - make image-build
+  # artifacts:
+  #   paths:
+  #     - output

@@ -1,0 +1,36 @@
+version: '3'
+services:
+  database:
+    container_name: "${SERVICE_NAME}-db-test"
+    image: mysql:5.7
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+        - MYSQL_ROOT_PASSWORD=251199
+        - MYSQL_DATABASE=modulordb
+    ports:
+        - "3307:3306"
+    networks: 
+        - networks-test
+    volumes: 
+        - ../../migrations/test/:/docker-entrypoint-initdb.d/
+
+  app:
+    container_name: "${SERVICE_NAME}-app-test"
+    image: ${SERVICE_NAME}:test
+    command: go clean -testcache
+    environment: 
+        - JWT_KEY=secret
+        - BACKEND_PORT=8081
+        - DRIVER_TYPE=mysql
+        - MYSQL_HOST=database
+        - MYSQL_USER=root
+        - MYSQL_PORT=3306
+        - MYSQL_PWD=251199
+        - MYSQL_DB=modulordb
+    depends_on: 
+      - database
+    networks: 
+      - networks-test
+
+networks:
+  networks-test:
